@@ -1,10 +1,11 @@
 # syntax=docker/dockerfile:1
-FROM python:3.7
-WORKDIR /code
-ENV FLASK_APP=main.py
-ENV FLASK_RUN_HOST=0.0.0.0
-RUN apk add --no-cache gcc musl-dev linux-headers
+FROM python:3.7-alpine
+RUN mkdir backend
+WORKDIR /backend
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=127.0.0.1
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-COPY . /code
 EXPOSE 5000
+COPY . ./backend
+CMD ["flask", "run"]

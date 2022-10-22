@@ -9,12 +9,12 @@ app = Flask(__name__)
 def about():
     return "About page"
 
-@app.route('/trips/new')
+@app.route('/routes/new')
 def des():
-	tripId = request.args.get('tripId')
+	routeId = request.args.get('routeId')
 	startTime = request.args.get('startTime')
 	busNumbers = request.args.get('busNumbers')
-	print("/trips/new",tripId,startTime,busNumbers)
+	print("/routes/new",routeId,startTime,busNumbers)
 
 	return jsonify(
 		username="das",
@@ -22,11 +22,11 @@ def des():
 		id="sdfd"
 	)
 
-@app.route('/trips/update')
+@app.route('/routes/update')
 def des2():
-	tripId = request.args.get('tripId')
+	routeId = request.args.get('routeId')
 	startTime = request.args.get('startTime')
-	print("/trips/update",tripId,startTime)
+	print("/routes/update",routeId,startTime)
 
 	return jsonify(
 		username="das",
@@ -34,11 +34,11 @@ def des2():
 		id="sdfd"
 	)
 
-@app.route('/trips/day')
+@app.route('/day')
 def des3():
 	return Response(status=400, mimetype='application/json')
 
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')

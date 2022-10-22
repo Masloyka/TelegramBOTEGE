@@ -2,7 +2,7 @@ version: '3'
 services:
   flask:
     # Путь до Dockerfile
-    build: .
+    build: ./backend
     # Имя для создаваемого контейнера
     container_name: backend-flask
     # Создание переменных окружения в контейнере

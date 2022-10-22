@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import jsonify
+from flask import Response
 
 app = Flask(__name__)
 		
@@ -35,12 +36,7 @@ def des2():
 
 @app.route('/trips/day')
 def des3():
-
-	return jsonify(
-		username="das",
-		email="fsd",
-		id="sdfd"
-	)
+	return Response(status=400, mimetype='application/json')
 
 
 

@@ -94,6 +94,15 @@ def transformSchedule(routes, startMinute=0):
 schedule = transformAlgorithmData(exampleTimeDict)
 
 
+def parseBaseArgs(request):
+    routeId = int(request.args.get('routeId'))
+    startTime = int(request.args.get('startTime'))
+    stopTime = int(request.args.get('stopTime'))
+    startPoint = int(request.args.get('startPoint'))
+    stopPoint = int(request.args.get('stopPoint'))
+    return routeId, startTime, stopTime, startPoint, stopPoint
+
+
 @app.errorhandler(404)
 def handel_404(error):
     return Response(status=404)
@@ -106,30 +115,25 @@ def handel_400(error):
 
 @app.route('/routes/new', methods=['POST'])
 def routeNew():
-    routeId = int(request.args.get('routeId'))
-    startTime = int(request.args.get('startTime'))
-    stopTime = int(request.args.get('stopTime'))
-    startPoint = int(request.args.get('startPoint'))
-    stopPoint = int(request.args.get('stopPoint'))
+    routeId, startTime, stopTime, startPoint, stopPoint = parseBaseArgs(request)
     passengers = int(request.args.get('passengers'))
-    buses = request.args.get('buses')
-    buses = [int(val) for val in buses.split(',')]
+    busesNumbers = request.args.get('buses')
+    busesNumbers = [int(val) for val in busesNumbers.split(',')]
     schedule[routeId] = {'routeId': routeId, 'startTime': startTime, 'stopTime': stopTime,
                          'startPoint': startPoint, 'stopPoint': stopPoint, 'passengerCount': passengers,
-                         'buses': buses}
+                         'buses': busesNumbers}
 
     return Response(status=200)
 
 
 @app.route('/routes/update', methods=['POST'])
 def routeUpdate():
-    routeId = int(request.args.get('routeId'))
-    startTime = int(request.args.get('startTime'))
-    stopTime = int(request.args.get('stopTime'))
-    startPoint = int(request.args.get('startPoint'))
-    stopPoint = int(request.args.get('stopPoint'))
-    
-
+    routeId, startTime, stopTime, startPoint, stopPoint = parseBaseArgs(request)
+    if routeId in schedule:
+        schedule[routeId].update({'routeId': routeId, 'startTime': startTime, 'stopTime': stopTime,
+                                  'startPoint': startPoint, 'stopPoint': stopPoint})
+    else:
+        return Response(status=400)
     return Response(status=200)
 
 
@@ -138,6 +142,7 @@ def routeDeleteBus():
     routeId = request.args.get('routeId')
     busId = request.args.get('busId')
     schedule[routeId]['buses'].remove(int(busId))
+    return Response(status=200)
 
 
 @app.route('/routes/addBus', methods=['POST'])
@@ -145,6 +150,7 @@ def routeAddBus():
     routeId = request.args.get('routeId')
     busId = request.args.get('busId')
     schedule[routeId]['buses'].append(int(busId))
+    return Response(status=200)
 
 
 @app.route('/day', methods=['GET'])

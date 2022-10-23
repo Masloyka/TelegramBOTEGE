@@ -153,12 +153,14 @@ def main():
         flight['complete_time'] = flight_complete_time
 
     # Write solution.csv
-    header = ['bus_id', 'task_type', 'src', 'trg', 'start_time', 'end_time']
+    header = ['task_id', 'bus_id', 'task_type', 'src', 'trg', 'start_time', 'end_time']
     solution_df = pd.DataFrame(solution, columns=header)
+    # Enumerate task_id column
+    solution_df['task_id'] = solution_df.index
     solution_df.to_csv(out_dirpath + '/solution.csv', index=False)
 
     # Write flights-new.csv
-    header = 'id,type,date,time,point_id,gate_id,passengers,buses,complete_time'.split(',')
+    header = 'type,date,time,point_id,gate_id,passengers,buses,complete_time'.split(',')
     flights_df = pd.DataFrame(flights, columns=header)
     flights_df.to_csv(out_dirpath + '/flights-new.csv', index=False)
 

@@ -91,14 +91,6 @@ def transformSchedule(routes, startMinute=0):
     return res
 
 
-def transformSchedule(routes, startMinute=0):
-    res = {}
-    for key, elem in routes.items():
-        if elem['stopTime'] > startMinute:
-            res[key] = elem
-    return res
-
-
 schedule = transformAlgorithmData(exampleTimeDict)
 
 

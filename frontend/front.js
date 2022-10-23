@@ -1,14 +1,14 @@
 const axios = require('axios');
 import baseUrl from './base';
 
-const new = async (routeID, startTIME, stopTIME,startPOINT,stopPOINT,Abuses) => {
+const new = async (routeID, startTIME, stopTIME,startPOINT,stopPOINT,aBuses) => {
     const r = await axios.patch(`${baseUrl}/routes/new?routeId=`, {
         routeId: routeID}, `&startTime=`,
         {startTime: startTIME}, `&stopTime=`,
         {stopTime: stopTIME}, `&startPoint=`,
         {startPoint: startPOINT},`&stopPoint=`
         {stopPoint: stopPOINT}, `&buses=`,
-        {buses: Abuses}, `&passengers=`
+        {buses: aBuses}, `&passengers=`
         {passengers: Apassengers}
     );
     if (r.status === 200) {
@@ -24,8 +24,8 @@ const schedule = async (schedule) => {
     return r.data.exists;
 };
 
-const fromMinute = async (Aminute) => {
-    const r = await axios.get(`${baseUrl}/fromMinute?minute=`,{minute: Aminute});
+const fromMinute = async (aMinute) => {
+    const r = await axios.get(`${baseUrl}/fromMinute?minute=`,{minute: aMinute});
 
     return r.data.exists;
 };

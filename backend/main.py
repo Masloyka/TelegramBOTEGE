@@ -61,6 +61,30 @@ exampleTimeDict = {
 }
 
 
+def createRoute(elem):
+    return { 'startTime': -1,
+             'stopTime': -1,
+             'buses': elem['buses'],
+             'passengerCount': elem['passengers']
+             }
+
+
+def transformAlgorithmData(timeDict, startMinute=0):
+    routes = {}
+    for key, arr in timeDict.items():
+        for elem in arr:
+            if elem['isStart'] is True:
+                routes[elem['routeId']] = createRoute(elem)
+                routes[elem['routeId']]['startTime'] = key
+            else:
+                routes[elem['routeId']]['stopTime'] = key
+    res = {}
+    for key, elem in routes.items():
+        if elem['stopTime'] > startMinute:
+            res[key] = elem
+    return res
+
+
 @app.route('/about')
 def about():
     return "About page"

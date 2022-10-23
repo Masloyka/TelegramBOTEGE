@@ -112,6 +112,7 @@ def main():
 
         solution.append({
           'bus_id': bus['bus_id'],
+          'flight_id': flight_id,
           'task_type': task_type_1,
           'src': bus_cur_point,
           'trg': src,
@@ -121,6 +122,7 @@ def main():
 
         solution.append({
           'bus_id': bus['bus_id'],
+          'flight_id': flight_id,
           'task_type': task_type_11,
           'src': src,
           'trg': src,
@@ -130,6 +132,7 @@ def main():
 
         solution.append({
           'bus_id': bus['bus_id'],
+          'flight_id': flight_id,
           'task_type': task_type_2,
           'src': src,
           'trg': trg,
@@ -139,6 +142,7 @@ def main():
 
         solution.append({
           'bus_id': bus['bus_id'],
+          'flight_id': flight_id,
           'task_type': task_type_21,
           'src': trg,
           'trg': trg,
@@ -153,7 +157,7 @@ def main():
         flight['complete_time'] = flight_complete_time
 
     # Write solution.csv
-    header = ['task_id', 'bus_id', 'task_type', 'src', 'trg', 'start_time', 'end_time']
+    header = ['task_id', 'bus_id', 'flight_id', 'task_type', 'src', 'trg', 'start_time', 'end_time']
     solution_df = pd.DataFrame(solution, columns=header)
     # Enumerate task_id column
     solution_df['task_id'] = solution_df.index

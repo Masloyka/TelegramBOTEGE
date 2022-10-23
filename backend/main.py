@@ -163,7 +163,11 @@ def routeDeleteBus():
 def routeAddBus():
     routeId = request.args.get('routeId')
     busId = request.args.get('busId')
-    schedule[routeId]['buses'].append(int(busId))
+    if routeId in schedule:
+        schedule[routeId]['buses'].append(int(busId))
+    else:
+        return Response(status=400)
+
     return Response(status=200)
 
 

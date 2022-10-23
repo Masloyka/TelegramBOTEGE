@@ -114,51 +114,37 @@ def routeNew():
     passengers = int(request.args.get('passengers'))
     buses = request.args.get('buses')
     buses = [int(val) for val in buses.split(',')]
-    schedule[routeId] = {}
-    schedule[routeId].update({'routeId': routeId, 'startTime': startTime, 'stopTime': stopTime,
-                              'startPoint': startPoint, 'stopPoint': stopPoint, 'passengerCount': passengers,
-                              'buses': buses})
+    schedule[routeId] = {'routeId': routeId, 'startTime': startTime, 'stopTime': stopTime,
+                         'startPoint': startPoint, 'stopPoint': stopPoint, 'passengerCount': passengers,
+                         'buses': buses}
 
     return Response(status=200)
 
 
 @app.route('/routes/update', methods=['POST'])
 def routeUpdate():
-    routeId = request.args.get('routeId')
-    startTime = request.args.get('startTime')
-    print("/routes/update", routeId, startTime)
+    routeId = int(request.args.get('routeId'))
+    startTime = int(request.args.get('startTime'))
+    stopTime = int(request.args.get('stopTime'))
+    startPoint = int(request.args.get('startPoint'))
+    stopPoint = int(request.args.get('stopPoint'))
+    
 
-    return jsonify(
-        username="das",
-        email="fsd",
-        id="sdfd"
-    )
+    return Response(status=200)
 
 
 @app.route('/routes/deleteBus', methods=['DELETE'])
 def routeDeleteBus():
     routeId = request.args.get('routeId')
-    startTime = request.args.get('startTime')
-    print("/routes/update", routeId, startTime)
-
-    return jsonify(
-        username="das",
-        email="fsd",
-        id="sdfd"
-    )
+    busId = request.args.get('busId')
+    schedule[routeId]['buses'].remove(int(busId))
 
 
-@app.route('/routes/addBus', methods=['UPDATE'])
+@app.route('/routes/addBus', methods=['POST'])
 def routeAddBus():
     routeId = request.args.get('routeId')
-    startTime = request.args.get('startTime')
-    print("/routes/update", routeId, startTime)
-
-    return jsonify(
-        username="das",
-        email="fsd",
-        id="sdfd"
-    )
+    busId = request.args.get('busId')
+    schedule[routeId]['buses'].append(int(busId))
 
 
 @app.route('/day', methods=['GET'])

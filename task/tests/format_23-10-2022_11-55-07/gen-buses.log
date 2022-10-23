@@ -1,0 +1,1 @@
+[2022-10-23 11:55:07,426| INFO] Started script_abspath='/home/leo/GitHub/aviahack-22/task/scripts/gen-buses.py' with args: Namespace(input='/home/leo/GitHub/aviahack-22/task/tests/format_23-10-2022_11-48-08', output='../tests')

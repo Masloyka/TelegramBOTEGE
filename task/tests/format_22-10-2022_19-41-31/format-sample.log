@@ -1,1 +1,0 @@
-[2022-10-22 19:41:31,680| INFO] Started script_abspath='/home/leo/work/aviahack-22/task/tests/format-sample.py' with args: Namespace(input='./sample', output='.')

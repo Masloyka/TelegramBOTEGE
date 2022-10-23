@@ -1,0 +1,1 @@
+[2022-10-23 13:17:47,511| INFO] Started script_abspath='/home/leo/GitHub/aviahack-22/task/scripts/roads-m-to-min.py' with args: Namespace(input='/home/leo/GitHub/aviahack-22/task/tests/jopka', output='../tests')

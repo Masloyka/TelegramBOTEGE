@@ -1,1 +1,0 @@
-[2022-10-22 18:01:25,786| INFO] Started script_abspath='/home/leo/work/aviahack-22/task/tests/plot.py' with args: Namespace(input='./sample', output='.')

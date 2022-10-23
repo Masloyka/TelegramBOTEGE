@@ -1,0 +1,4 @@
+[2022-10-23 12:54:30,268| INFO] Started script_abspath='/home/leo/GitHub/aviahack-22/task/scripts/solve.py' with args: Namespace(input='/home/leo/GitHub/aviahack-22/task/tests/good', output='/home/leo/GitHub/aviahack-22/task/tests/good')
+[2022-10-23 12:54:30,651| INFO] Bus 0
+[2022-10-23 12:54:30,651| INFO] src, trg, bus_cur_point: 160, 1213, 943
+[2022-10-23 12:54:30,651| INFO] src, trg, bus_cur_point: 160, 1215, 1213

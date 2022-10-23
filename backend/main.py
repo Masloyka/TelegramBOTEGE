@@ -103,6 +103,11 @@ def parseBaseArgs(request):
     return routeId, startTime, stopTime, startPoint, stopPoint
 
 
+@app.errorhandler(500)
+def handel_404(error):
+    return Response(status=500)
+
+
 @app.errorhandler(404)
 def handel_404(error):
     return Response(status=404)
@@ -119,14 +124,16 @@ def routeNew():
     passengers = int(request.args.get('passengers'))
     busesNumbers = request.args.get('buses')
     busesNumbers = [int(val) for val in busesNumbers.split(',')]
-    schedule[routeId] = {'routeId': routeId, 'startTime': startTime, 'stopTime': stopTime,
-                         'startPoint': startPoint, 'stopPoint': stopPoint, 'passengerCount': passengers,
-                         'buses': busesNumbers}
-
+    if routeId in schedule:
+        return Response(status=400)
+    else:
+        schedule[routeId] = {'routeId': routeId, 'startTime': startTime, 'stopTime': stopTime,
+                             'startPoint': startPoint, 'stopPoint': stopPoint, 'passengerCount': passengers,
+                             'buses': busesNumbers}
     return Response(status=200)
 
 
-@app.route('/routes/update', methods=['POST'])
+@app.route('/routes/update', methods=['PUT'])
 def routeUpdate():
     routeId, startTime, stopTime, startPoint, stopPoint = parseBaseArgs(request)
     if routeId in schedule:
@@ -141,11 +148,18 @@ def routeUpdate():
 def routeDeleteBus():
     routeId = request.args.get('routeId')
     busId = request.args.get('busId')
-    schedule[routeId]['buses'].remove(int(busId))
+    if routeId in schedule:
+        try:
+            schedule[routeId]['buses'].remove(int(busId))
+        except ValueError as e:
+            return Response(status=400)
+    else:
+        return Response(status=400)
+
     return Response(status=200)
 
 
-@app.route('/routes/addBus', methods=['POST'])
+@app.route('/routes/addBus', methods=['PUT'])
 def routeAddBus():
     routeId = request.args.get('routeId')
     busId = request.args.get('busId')
@@ -153,15 +167,18 @@ def routeAddBus():
     return Response(status=200)
 
 
-@app.route('/day', methods=['GET'])
+@app.route('/schedule', methods=['GET'])
 def getDaySchedule():
     global schedule
-    return jsonify(
-        list(schedule.values())
-    )
+    if not schedule:
+        return Response(status=400)
+    else:
+        return jsonify(
+            list(schedule.values())
+        )
 
 
-@app.route('/fromMinute', methods=['GET'])
+@app.route('/fromMinute', methods=['PUT'])
 def getCurrentSchedule():
     global schedule
     startTime = request.args.get('minute')

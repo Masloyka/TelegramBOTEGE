@@ -173,7 +173,6 @@ def routeAddBus():
 
 @app.route('/schedule', methods=['GET'])
 def getDaySchedule():
-    global schedule
     if not schedule:
         return Response(status=400)
     else:

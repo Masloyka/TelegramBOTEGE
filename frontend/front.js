@@ -1,15 +1,15 @@
 const axios = require('axios');
 import baseUrl from './base';
 
-const new = async (routeID, startTIME, stopTIME,startPOINT,stopPOINT,aBuses) => {
+const new = async (routeId, startTime, stopTime,startPoint,stopPoint,buses,passengers) => {
     const r = await axios.patch(`${baseUrl}/routes/new?routeId=`, {
-        routeId: routeID}, `&startTime=`,
-        {startTime: startTIME}, `&stopTime=`,
-        {stopTime: stopTIME}, `&startPoint=`,
-        {startPoint: startPOINT},`&stopPoint=`
-        {stopPoint: stopPOINT}, `&buses=`,
-        {buses: aBuses}, `&passengers=`
-        {passengers: Apassengers}
+        routeId: routeId}, `&startTime=`,
+        {startTime: startTime}, `&stopTime=`,
+        {stopTime: stopTime}, `&startPoint=`,
+        {startPoint: startPoint},`&stopPoint=`
+        {stopPoint: stopPoint}, `&buses=`,
+        {buses: buses}, `&passengers=`
+        {passengers: passengers}
     );
     if (r.status === 200) {
         return r.data;
@@ -30,13 +30,13 @@ const fromMinute = async (aMinute) => {
     return r.data.exists;
 };
 
-const updateroads = async (routeID, startTIME, stopTIME, startPOINT, stopPOINT) => {
+const updateRoads = async (routeId, startTime, stopTime, startPoint, stopPoint) => {
     const r = await axios.patch(`${baseUrl}/routes/routes?routeId=`, {
-        routeId: routeID}, `&startTime=`,
-        {startTime: startTIME}, `&stopTime=`,
-        {stopTime: stopTIME}, `&startPoint=`,
-        {startPoint: startPOINT}, `&stopPoint=`,
-        {stopPoint: stopPOINT}
+        routeId: routeId}, `&startTime=`,
+        {startTime: startTime}, `&stopTime=`,
+        {stopTime: stopTime}, `&startPoint=`,
+        {startPoint: startPoint}, `&stopPoint=`,
+        {stopPoint: stopPoint}
     );
     if (r.status === 200) {
         return r.data;
@@ -45,10 +45,10 @@ const updateroads = async (routeID, startTIME, stopTIME, startPOINT, stopPOINT) 
     }
 };
 
-const delete = async (routeID,busID) => {
+const delete = async (routeId,busId) => {
     const r = await axios.delete(`${baseUrl}/routes/deleteBus?routeId=`,
         {roadId: roadID}, `&busId=`,
-        {busId: busID}
+        {busId: busId}
 
     );
     if (r.status === 200) {
@@ -58,10 +58,10 @@ const delete = async (routeID,busID) => {
     }
 };
 
-const add_bus = async (routeID,busID) => {
+const add_bus = async (routeId,busId) => {
     const r = await axios.delete(`${baseUrl}/routes/addBus?routeId=`,
         {roadId: roadID}, `&busId=`,
-        {busId: busID}
+        {busId: busId}
 
     );
     if (r.status === 200) {

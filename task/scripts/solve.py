@@ -101,8 +101,14 @@ def main():
         task_time_1 = all_pairs_shortest_paths_length[bus_cur_point][src]
         task_type_1 = 'to_load_from_aircraft' if flight['type'] == 'A' else 'to_load_from_gate'
 
+        task_time_11 = 5
+        task_type_11 = 'loading'
+
         task_time_2 = all_pairs_shortest_paths_length[src][trg]
         task_type_2 = 'to_unload_to_aircraft' if flight['type'] == 'D' else 'to_unload_to_gate'
+
+        task_time_21 = 10
+        task_type_21 = 'unloading'
 
         solution.append({
           'bus_id': bus['bus_id'],
@@ -115,18 +121,36 @@ def main():
 
         solution.append({
           'bus_id': bus['bus_id'],
+          'task_type': task_type_11,
+          'src': src,
+          'trg': src,
+          'start_time': bus_start_time + task_time_1,
+          'end_time': bus_start_time + task_time_1 + task_time_11,
+        })
+
+        solution.append({
+          'bus_id': bus['bus_id'],
           'task_type': task_type_2,
           'src': src,
           'trg': trg,
-          'start_time': bus_start_time + task_time_1,
-          'end_time': bus_start_time + task_time_1 + task_time_2,
+          'start_time': bus_start_time + task_time_1 + task_time_11,
+          'end_time': bus_start_time + task_time_1 + task_time_11 + task_time_2,
         })
+
+        solution.append({
+          'bus_id': bus['bus_id'],
+          'task_type': task_type_21,
+          'src': trg,
+          'trg': trg,
+          'start_time': bus_start_time + task_time_1 + task_time_11 + task_time_2,
+          'end_time': bus_start_time + task_time_1 + task_time_11 + task_time_2 + task_time_21,
+        })
+
+        bus_start_time += task_time_1 + task_time_11 + task_time_2 + task_time_21
+        bus['point_id'] = trg
 
         flight_complete_time = bus_start_time + task_time_1 + task_time_2 if flight['type'] == 'D' else bus_start_time + task_time_1
         flight['complete_time'] = flight_complete_time
-
-        bus['point_id'] = trg
-        bus_start_time += task_time_1 + task_time_2
 
     # Write solution.csv
     header = ['bus_id', 'task_type', 'src', 'trg', 'start_time', 'end_time']

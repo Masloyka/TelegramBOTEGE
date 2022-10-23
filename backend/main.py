@@ -104,7 +104,7 @@ def parseBaseArgs(request):
 
 
 @app.errorhandler(500)
-def handel_404(error):
+def handel_500(error):
     return Response(status=500)
 
 
@@ -186,9 +186,7 @@ def getCurrentSchedule():
     global schedule
     startTime = request.args.get('minute')
     schedule = transformSchedule(schedule, startMinute=int(startTime))
-    return jsonify(
-        list(schedule.values())
-    )
+    return Response(status=200)
 
 
 if __name__ == "__main__":

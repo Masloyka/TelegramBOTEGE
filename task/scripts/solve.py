@@ -113,6 +113,7 @@ def main():
         solution.append({
           'bus_id': bus['bus_id'],
           'flight_id': flight_id,
+          'passengers': flight['passengers'],
           'task_type': task_type_1,
           'src': bus_cur_point,
           'trg': src,
@@ -123,6 +124,7 @@ def main():
         solution.append({
           'bus_id': bus['bus_id'],
           'flight_id': flight_id,
+          'passengers': flight['passengers'],
           'task_type': task_type_11,
           'src': src,
           'trg': src,
@@ -133,6 +135,7 @@ def main():
         solution.append({
           'bus_id': bus['bus_id'],
           'flight_id': flight_id,
+          'passengers': flight['passengers'],
           'task_type': task_type_2,
           'src': src,
           'trg': trg,
@@ -143,6 +146,7 @@ def main():
         solution.append({
           'bus_id': bus['bus_id'],
           'flight_id': flight_id,
+          'passengers': flight['passengers'],
           'task_type': task_type_21,
           'src': trg,
           'trg': trg,
@@ -157,14 +161,12 @@ def main():
         flight['complete_time'] = flight_complete_time
 
     # Write solution.csv
-    header = ['task_id', 'bus_id', 'flight_id', 'task_type', 'src', 'trg', 'start_time', 'end_time']
+    header = ['bus_id', 'flight_id', 'passengers', 'task_type', 'src', 'trg', 'start_time', 'end_time']
     solution_df = pd.DataFrame(solution, columns=header)
-    # Enumerate task_id column
-    solution_df['task_id'] = solution_df.index
     solution_df.to_csv(out_dirpath + '/solution.csv', index=False)
 
     # Write flights-new.csv
-    header = 'type,date,time,point_id,gate_id,passengers,buses,complete_time'.split(',')
+    header = 'id,type,date,time,point_id,gate_id,passengers,buses,complete_time'.split(',')
     flights_df = pd.DataFrame(flights, columns=header)
     flights_df.to_csv(out_dirpath + '/flights-new.csv', index=False)
 

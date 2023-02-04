@@ -1,34 +1,36 @@
-from aiogram import Dispatcher, Bot, executor, types
-from aiogram.types import ReplyKeyboardRemove, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+import telebot
+from telebot import types
+token = 'token'
 
-API = 'token'
+client = telebot.TeleBot(token)
 
-bot = Bot(API)
-update = Dispatcher(bot)
-
-
-button_hi = KeyboardButton('Я максимально готов сдать ЕГЭ')
-kb1 = ReplyKeyboardMarkup()
-kb1.add(button_hi)
-kb1 = ReplyKeyboardMarkup(resize_keyboard=True).add(button_hi)
-
-@update.message_handler(commands=['start'])
-async def button_hi(message: types.message):
-    await message.reply('Здравствуйте,флешка!\nЭтот бот поможет сдать ЕГЭ на 100!!!\nЖду твоего сообщения', reply_markup=kb1)
+@client.message_handler(commands=['get_info', 'info'])
+def get_users_id(message):
+    markup_inline = types.InlineKeyboardMarkup()
+    button_yes = types.InlineKeyboardButton(text='да', callback_data = 'yes')
+    button_no = types.InlineKeyboardButton(text='нет', callback_data = 'no')
+    markup_inline.add(button_no, button_yes)
+    client.send_message(message.chat.id, 'Хотите узнать о себе?',
+        reply_markup= markup_inline
+    )
 
 
-
-@update.message_handler(commands=['start'])
-async def welcome(message: types.message):
-    await message.reply("Здравствуйте,флешка!\nЭтот бот поможет сдать ЕГЭ на 100!!!\nЖду твоего сообщения")
-
-@update.message_handler(commands=['help'])
-async def help(message: types.message):
-    await  message.reply('Напиши мне что-нибудь и получишь ответ')
-
-@update.message_handler()
-async def answer(message: types.message):
-    await message.answer(message.text)
-
-if __name__ == '__main__':
-    executor.start_polling(update, skip_updates=True)
+@client.callback_query_handler(func=lambda call: True)
+def aswer(call):
+    if call.data == 'yes':
+        markip_a = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        button_id = types.KeyboardButton(text='МОЙ ID')
+        button_users = types.KeyboardButton(text='МОЙ НИК')
+        markip_a.add(button_id, button_users)
+        client.send_message(call.message.chat.id, 'Нажми на одну из кнопок!',
+                            reply_markup=markip_a
+                            )
+    if call.data == 'no':
+        pass
+@client.message_handler(content_types=['text'])
+def text(message):
+    if message.text == 'МОЙ ID':
+        client.send_message(message.chat.id, f'Your id:{message.from_user.id}')
+    if message.text == 'МОЙ НИК':
+        client.send_message(message.chat.id, f'Your nickname:{message.from_user.first_name} {message.from_user.last_name}')
+client.polling(none_stop=True, interval=0)

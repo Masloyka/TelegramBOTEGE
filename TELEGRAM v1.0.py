@@ -53,7 +53,7 @@ ZADANIE_4 = """
 Перейдя по ссылке можно будет подробно ознакомится с решением данного задания
 На фото представлен вид задания
 """
-photo=InputFile('/home/dmitrii/Документы/telegram_bot/venv/zadanie2.png')
+
 @update.message_handler(commands=['start'])
 async def welcome(message: types.message):
     await bot.send_message(chat_id=message.chat.id,
